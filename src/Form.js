@@ -78,34 +78,47 @@ function StateDropdown(props) {
   )
 }
 
-function Form(props) {
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    this.props.history.push('./success');
+    event.preventDefault();
+  }
+
+  render() {
+    console.log(this.props);
     return (
-      <form onSubmit={props.onSubmit}>
-        <Field label='Name' name='name' placeholder="John Doe" value={props.name} onChange={props.onChange} required='required'/>
+      <form onSubmit={this.handleSubmit}>
+        <Field label='Name' name='name' placeholder="John Doe" value={this.props.name} onChange={this.props.onChange} required='required'/>
         <br/>
-        <Field label='Address Line 1' name='street' placeholder="123 Main St." value={props.street} onChange={props.onChange} required='required'/>
+        <Field label='Address Line 1' name='street' placeholder="123 Main St." value={this.props.street} onChange={this.props.onChange} required='required'/>
         <br/>
-        <Field label='Address Line 2' name='street2' placeholder="Apt 4A" value={props.street2} onChange={props.onChange}/>
+        <Field label='Address Line 2' name='street2' placeholder="Apt 4A" value={this.props.street2} onChange={this.props.onChange}/>
         <br/>
-        <Field label='City' name='city' placeholder="Los Angeles" value={props.city} onChange={props.onChange} required='required'/>
+        <Field label='City' name='city' placeholder="Los Angeles" value={this.props.city} onChange={this.props.onChange} required='required'/>
         <br />
-        <StateDropdown value={props.state} onChange={props.onChange} />
+        <StateDropdown value={this.props.state} onChange={this.props.onChange} />
         <br/>
-        <Field label='Zip' name='zipcode' placeholder="90001" value={props.zipcode} onChange={props.onChange} required='required'/>
+        <Field label='Zip' name='zipcode' placeholder="90001" value={this.props.zipcode} onChange={this.props.onChange} required='required'/>
         <br/>
-        <Field label="Email" name="email" placeholder="john@hometap.com" value={props.email} onChange={props.onChange} required='required'/>
+        <Field label="Email" name="email" placeholder="john@hometap.com" value={this.props.email} onChange={this.props.onChange} required='required'/>
         <br/>
-        <Field label="Phone Number" name="phone" placeholder="973-234-2353" value={props.phone} onChange={props.onChange} required='required'/>
+        <Field label="Phone Number" name="phone" placeholder="973-234-2353" value={this.props.phone} onChange={this.props.onChange} required='required'/>
         <br/>
-        <Field label="Product A" name="isProductA" type="checkbox" checked={props.isProductA} onChange={props.onChange}/>
+        <Field label="Product A" name="isProductA" type="checkbox" checked={this.props.isProductA} onChange={this.props.onChange}/>
         <br/>
-        <Field label="Product B" name="isProductB" type="checkbox" checked={props.isProductB} onChange={props.onChange}/>
+        <Field label="Product B" name="isProductB" type="checkbox" checked={this.props.isProductB} onChange={this.props.onChange}/>
         <br/>
-        <Field label="Product C" name="isProductC" type="checkbox" checked={props.isProductC} onChange={props.onChange}/>
+        <Field label="Product C" name="isProductC" type="checkbox" checked={this.props.isProductC} onChange={this.props.onChange}/>
         <br/>
         <input type="submit" value="Submit"/>
       </form>
     );
+  }
 }
 
 export default Form;
