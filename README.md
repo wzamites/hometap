@@ -1,68 +1,34 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Hometap
 
-## Available Scripts
+A web app that submits a form and calls an API for validation.
 
-In the project directory, you can run:
+## Run it locally
 
-### `npm start`
+This is a React application which runs locally on 3000.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    $ git clone https://github.com/wzamites/hometap/
+    $ cd hometap
+    $ npm install
+    $ npm start
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Component Architecture
 
-### `npm test`
+There are two React components that matter: App.js, and Form.js.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### App.js
 
-### `npm run build`
+This file contains the pages for both the form, and the success page after submission, controlled by React Router. These two pages need to subscribe to the same state, so that's why the state of each input field lives in App.js.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Form.js
+Form is the name of the component being exported, although Form.js contains helper components. The onChange prop calls handleChange in App.js, and updates the state there.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+#### handleSubmit()
+I'm using an asynchronous promise called fetch(), a browser API, to make a GET request to `https://www.zipcodeapi.com/`, an endpoint that returns an array of valid zip codes for a given city and state.
+In the promise chain, I use the includes() method to return a boolean indicating whether the zip code submitted is valid for that city and state. The include() method is O(n) but the most zip codes in a single city is only about 220 (Los Angeles, CA) so it's negligible.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## What I didn't do
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Calling an alert isn't the best way to validate a form, and it's not called for in the style guide. Something like `event.target.setCustomValidity("This zip code doesn't match this address")`, then styling that according to the guide would do the trick.
+- Check boxes are hard to style, so I copied styling directly from w3. It's not exactly what the style guide calls for but it's closer than the default.
+- The API call can be slow. I didn't register the app and I didn't deal with CORS etc, so I'm using a proxy for now to get around that problem. I don't have any spinners etc. to let the user know that a call is in progress.
+- The styling of the forms is pretty close in Chrome and Firefox, but the CSS states aren't right (:focus, :disabled, etc).
