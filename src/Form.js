@@ -81,42 +81,61 @@ function StateDropdown(props) {
 class Form extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {zipValid: false}
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
-    this.props.history.push('./success');
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const city = this.props.city;
+    const state = this.props.state;
+    const zipcode = this.props.zipcode
+    const url = `https://www.zipcodeapi.com/rest/N4YTIo3lM8IXkucKBBOKQz3DpJj7yb0WCxSqjPomtRzLGa7tOfJe1fmgMfeod5u0/city-zips.json/${city}/${state}`
+    fetch(proxyurl + url)
+    .then(response => {return response.json()})
+    .then(data => data.zip_codes)
+    .then(data => {
+      this.setState( {zipValid: data.includes(zipcode)} );
+    })
+    .then(data => {
+      if (!this.state.zipValid) {
+        alert("The Zip isn't valid")
+      } else {
+        this.props.history.push('./success');
+      }
+    })
+
     event.preventDefault();
   }
 
   render() {
-    console.log(this.props);
     return (
-      <form onSubmit={this.handleSubmit}>
-        <Field label='Name' name='name' placeholder="John Doe" value={this.props.name} onChange={this.props.onChange} required='required'/>
-        <br/>
-        <Field label='Address Line 1' name='street' placeholder="123 Main St." value={this.props.street} onChange={this.props.onChange} required='required'/>
-        <br/>
-        <Field label='Address Line 2' name='street2' placeholder="Apt 4A" value={this.props.street2} onChange={this.props.onChange}/>
-        <br/>
-        <Field label='City' name='city' placeholder="Los Angeles" value={this.props.city} onChange={this.props.onChange} required='required'/>
-        <br />
-        <StateDropdown value={this.props.state} onChange={this.props.onChange} />
-        <br/>
-        <Field label='Zip' name='zipcode' placeholder="90001" value={this.props.zipcode} onChange={this.props.onChange} required='required'/>
-        <br/>
-        <Field label="Email" name="email" placeholder="john@hometap.com" value={this.props.email} onChange={this.props.onChange} required='required'/>
-        <br/>
-        <Field label="Phone Number" name="phone" placeholder="973-234-2353" value={this.props.phone} onChange={this.props.onChange} required='required'/>
-        <br/>
-        <Field label="Product A" name="isProductA" type="checkbox" checked={this.props.isProductA} onChange={this.props.onChange}/>
-        <br/>
-        <Field label="Product B" name="isProductB" type="checkbox" checked={this.props.isProductB} onChange={this.props.onChange}/>
-        <br/>
-        <Field label="Product C" name="isProductC" type="checkbox" checked={this.props.isProductC} onChange={this.props.onChange}/>
-        <br/>
-        <input type="submit" value="Submit"/>
-      </form>
+      <div className='container'>
+        <form onSubmit={this.handleSubmit}>
+          <Field type='text' label='Name' name='name' placeholder="John Doe" value={this.props.name} onChange={this.props.onChange} required='required'/>
+          <br/>
+          <Field type='text' label='Address Line 1' name='street' placeholder="123 Main St." value={this.props.street} onChange={this.props.onChange} required='required'/>
+          <br/>
+          <Field type='text' label='Address Line 2' name='street2' placeholder="Apt 5A" value={this.props.street2} onChange={this.props.onChange}/>
+          <br/>
+          <Field type='text' label='City' name='city' placeholder="Los Angeles" value={this.props.city} onChange={this.props.onChange} required='required'/>
+          <br />
+          <StateDropdown value={this.props.state} onChange={this.props.onChange} />
+          <br/>
+          <Field type='text' label='Zip' name='zipcode' placeholder="90001" value={this.props.zipcode} onChange={this.props.onChange} required='required'/>
+          <br/>
+          <Field type='text' label="Email" name="email" placeholder="john@hometap.com" value={this.props.email} onChange={this.props.onChange} required='required'/>
+          <br/>
+          <Field type='text' label="Phone Number" name="phone" placeholder="973-234-2353" value={this.props.phone} onChange={this.props.onChange} required='required'/>
+          <br/>
+          <Field type="checkbox" label="Product A" name="isProductA" checked={this.props.isProductA} onChange={this.props.onChange}/>
+          <Field type="checkbox" label="Product B" name="isProductB" checked={this.props.isProductB} onChange={this.props.onChange}/>
+          <Field type="checkbox" label="Product C" name="isProductC" checked={this.props.isProductC} onChange={this.props.onChange}/>
+          <br/>
+          <input type="submit" value="Submit"/>
+        </form>
+      </div>
     );
   }
 }

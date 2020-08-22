@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
-import BrowserRouter from 'react-router-dom/BrowserRouter'
-import Route from 'react-router-dom/Route'
+import { BrowserRouter, Route } from "react-router-dom";
 
 import Form from './Form'
 import Success from './Success'
@@ -32,21 +31,6 @@ class App extends React.Component {
 
     this.setState({[name]: value});
   }
-
-  validateZip() {
-   let url = 'https://us-zipcode.api.smartystreets.com/lookup?auth-id=3cb227ce-314a-fc92-a26b-dfaa1dd5fe6d&auth-token=jrzoP7qyPzKtzAFveY2l&city=' + this.state.city + '&state=' + this.state.state
-   fetch(url)
-   .then(response => response.json())
-   .then(data => data[0].zipcodes)
-   .then(data => {
-     const zipHash = {}
-     for (const place in data) {
-       zipHash[place.zipcode] = true
-     }
-     return zipHash
-   })
-   .then(data => {this.state.zipcode in data ? this.setState({zipValid: true}) : this.setState({zipValid: false})})
- }
 
   render() {
     return (
