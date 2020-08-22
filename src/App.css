@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+
+input[type=text] {
+  width: 400px;
+  height: 40px;
+}
+
+select {
+  width: 400px;
+  height: 40px;
+}
+
+input[type=submit] {
+  background-color: #366CED;
+  height: 48px;
+  width: 250px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+}
+
+input[type=submit]:hover {
+  opacity: 0.75;
+}
+
+input[type=submit]:active {
+  opacity: 0.5;
+}
