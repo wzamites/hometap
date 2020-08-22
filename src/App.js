@@ -1,17 +1,13 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route } from "react-router-dom";
-
-import logo from './hometap-logo-horizontal-680x680.png'
-
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Jumbotron from 'react-bootstrap/Jumbotron'
-import Container from 'react-bootstrap/Container'
-import Image from 'react-bootstrap/Image'
-
-import Form from './Form'
-import Success from './Success'
+import logo from './hometap-logo-horizontal-680x680.png';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Container from 'react-bootstrap/Container';
+import Form from './Form';
+import Success from './Success';
 
 class App extends React.Component {
   constructor(props) {
@@ -27,7 +23,7 @@ class App extends React.Component {
       state: '',
       isProductA: false,
       isProductB: false,
-      isProductC: false
+      isProductC: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -36,7 +32,6 @@ class App extends React.Component {
   handleChange(event) {
     const value = event.target.name.substr(0, 9) === 'isProduct' ? event.target.checked : event.target.value;
     const name = event.target.name;
-
     this.setState({[name]: value});
   }
 
@@ -50,7 +45,7 @@ class App extends React.Component {
                 <h1>My Form</h1>
               </Col>
               <Col>
-                <img className='logo' src={logo} />
+                <img alt='logo' className='logo' src={logo} />
               </Col>
             </Row>
           </Container>
@@ -71,6 +66,7 @@ class App extends React.Component {
                 isProductB={this.state.isProductB}
                 isProductC={this.state.isProductC}
                 onChange={this.handleChange}
+                onSubmit={this.handleSubmit}
               />
             )} />
             <Route exact path='/success'>

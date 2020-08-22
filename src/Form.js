@@ -1,7 +1,6 @@
 import React from 'react';
-
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 function Field(props) {
   return (
@@ -31,7 +30,7 @@ function Checkbox(props) {
         type='checkbox'
         required = {props.required}
       />
-      <span class="checkmark"></span>
+      <span className="checkmark"></span>
     </label>
   )
 }
@@ -101,7 +100,7 @@ function StateDropdown(props) {
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {zipValid: false}
+    this.state = {zipValid: false};
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -110,7 +109,7 @@ class Form extends React.Component {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const city = this.props.city;
     const state = this.props.state;
-    const zipcode = this.props.zipcode
+    const zipcode = this.props.zipcode;
     const url = `https://www.zipcodeapi.com/rest/N4YTIo3lM8IXkucKBBOKQz3DpJj7yb0WCxSqjPomtRzLGa7tOfJe1fmgMfeod5u0/city-zips.json/${city}/${state}`
     fetch(proxyurl + url)
     .then(response => {return response.json()})
