@@ -100,7 +100,6 @@ function StateDropdown(props) {
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {zipValid: false};
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -114,14 +113,12 @@ class Form extends React.Component {
     fetch(proxyurl + url)
     .then(response => {return response.json()})
     .then(data => data.zip_codes)
-    .then(data => {
-      this.setState( {zipValid: data.includes(zipcode)} );
-    })
-    .then(data => {
-      if (!this.state.zipValid) {
-        alert("The Zip isn't valid")
-      } else {
+    .then(data => data.includes(zipcode))
+    .then(isZipcode => {
+      if (isZipcode) {
         this.props.history.push('./success');
+      } else {
+        alert("The Zip isn't valid")
       }
     })
     event.preventDefault();
@@ -157,13 +154,15 @@ class Form extends React.Component {
               <Field type='text' label="Phone Number" name="phone" placeholder="973-234-2353" value={this.props.phone} onChange={this.props.onChange} className='fullWidth' required='required'/>
               <br/>
               <br/>
-              <input type="submit" value="Submit"/>
             </Col>
             <Col>
               <Checkbox label="Product A" name="isProductA" checked={this.props.isProductA} onChange={this.props.onChange}/>
               <Checkbox label="Product B" name="isProductB" checked={this.props.isProductB} onChange={this.props.onChange}/>
               <Checkbox label="Product C" name="isProductC" checked={this.props.isProductC} onChange={this.props.onChange}/>
             </Col>
+          </Row>
+          <Row>
+            <input type="submit" value="Submit"/>
           </Row>
         </form>
       </div>
