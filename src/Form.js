@@ -97,7 +97,7 @@ function StateDropdown(props) {
   )
 }
 
-function Form(props) {
+export default function Form(props) {
   function handleSubmit(event) {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const city = props.city;
@@ -161,5 +161,3 @@ function Form(props) {
     </div>
   );
 }
-
-export default Form;
